@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+th:replace="~{base::parent(~{::.getin},~{::title},~{})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    
+    <div class="getin">
+        <div class="grid grid-cols-12 mt-4">
+        <div class="col-span-0 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+            <!-- this down div is for login box -->
+            <div class="block  p-6 border-t-8 border-blue-700 bg-white rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-blue-700 dark:hover:bg-gray-700">
+                <!-- alert box -->
+                <div th:replace="~{message :: messagebox}"></div>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Login Here</h5>
+                <p class="font-normal  text-gray-400 dark:text-gray-400">Enter your credentials</p>
+
+                <div class="text-red-500 text-center my-3" th:if="${param.error}">
+                    Invalid username and password.</div>
+                <div class="text-green-500 text-center my-3" th:if="${param.logout}">
+                    You have been logged out.</div>
+                <!-- form -->
+                <form 
+                    class="mt-4"
+                    method="post"
+                    data-th-action="@{'/authenticate'}">
+                    <!-- email -->
+                    <div class="mb-0 mt-2">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                        <input name="email" type="email"  id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@gmail.com" required />
+                        <!-- <p 
+                        data-th-if="${#fields.hasErrors('email')}"
+                        data-th-errors="*{email}"
+                        class="text-red-500 p-1 px-1">required</p> -->
+                    </div>
+                    
+                    <!-- password -->
+                    <div class="mb-0 mt-2">
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <input name="password" type="password"  id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        <!-- <p 
+                        data-th-if="${#fields.hasErrors('password')}"
+                        data-th-errors="*{password}"
+                        class="text-red-500 p-1 px-1"> required</p> -->
+                    </div>
+                    
+                  
+                    <!-- submit -->
+                    <section class="flex gap-3 items-center flex-col mt-2">
+                        <button type="submit" class="text-white mt-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+                        
+                        <!-- <button type="reset" class="text-white mt-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Reset</button> -->
+                        
+                    </section>  
+                
+                </form>
+                <!-- or line -->
+                <div class="inline-flex items-center justify-center w-full">
+                    <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                    <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-800 rounded-xl">or</span>
+                </div>
+                
+                <div class="social-buttons-container flex justify-center items-center flex-col space-y-4 mt-4">
+              <!-- <a class="px-3 py-2 w-1/2 font-semibold rounded-2xl login-with-google-btn text-center"
+                data-th-href="@{'/oauth2/authorization/google'}">Sign in with Google</a> -->
+
+                <!-- <svg   class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                    <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+                    </svg> -->
+
+                    
+
+
+                    <a data-th-href="@{'/oauth2/authorization/google'}" class=" border text-gray-800 bg-gray-200 dark:text-gray-100 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-500 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center transition-all duration-50 ease-in-out me-2 mb-2">
+                        <!-- Google Icon SVG with smaller size -->
+                        <svg class="w-6 h-6 me-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                          <!-- Blue section -->
+                          <path fill="#4285F4" d="M24 9.5c3.7 0 6.3 1.6 7.8 2.9l5.8-5.8C34.7 3.7 29.7 1.5 24 1.5 14.7 1.5 6.9 6.9 4 14.4l6.9 5.3C12.5 13.7 17.7 9.5 24 9.5z"/>
+                          <!-- Red section -->
+                          <path fill="#EA4335" d="M47 24.4c0-1.5-.1-3-.4-4.4H24v8.3h12.8c-.6 3.2-2.4 5.9-5.1 7.8l6.8 5.3C43.7 37.7 47 31.6 47 24.4z"/>
+                          <!-- Yellow section -->
+                          <path fill="#FBBC05" d="M11.6 28.8c-.9-2.5-.9-5.2 0-7.7L4.8 15.7C1.8 21.4 1.8 28.6 4.8 34.3l6.8-5.5z"/>
+                          <!-- Green section -->
+                          <path fill="#34A853" d="M24 47c5.7 0 10.7-1.9 14.2-5.3L31.4 36c-2.1 1.4-4.8 2.2-7.4 2.2-6.3 0-11.5-4.2-13.3-10.1l-6.8 5.3C6.9 41.1 14.7 47 24 47z"/>
+                        </svg>
+                        Sign in with Google
+                      </a>
+
+                    <a  data-th-href="@{'/oauth2/authorization/github'}" class="border text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 transition-all duration-50 ease-in-out me-2 mb-2">
+                        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+                        </svg>
+                        Sign in with Github
+                    </a>
+                      
+                      
+                      
+                      
+                      
+                    </div>
+                
+            </div>
+            
+        </div>
+        
+       
+    </div>
+   
+    
+</body>
+</html>

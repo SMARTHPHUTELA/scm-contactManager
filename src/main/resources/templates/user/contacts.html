@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-th-replace="~{base::parent(~{::#allcontacts},~{::title},~{::script})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-th-text="${loggedInUser.user_name}+' | All Contacts'"></title>
+    
+</head>
+<body >
+    <section id="allcontacts" class=" sm:pl-64 pt-20 ">
+        <div class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-sm px-5 py-2 text-center dark:bg-blue-900 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        
+            <h1 class=" text-5xl text-center font-sans animate-pulse">All Your Contacts</h1>
+            <p class="text-center mt-2 p-3 animate-ping">List of all Contacts...</p>
+        </div>
+        <div class="contacts_container p-5">
+                
+<div class="relative overflow-x-auto  shadow-md rounded-2xl">
+
+
+
+
+<form data-th-object="${contactSearchForm}"
+action="" data-th-action="@{'/user/contact/search'}">
+    <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
+        <!-- Select Field on the Left -->
+        <div class="flex items-center">
+            <label for="countries_disabled" class="block text-sm font-medium text-gray-900 dark:text-white mr-2">Select:</label>
+            <select data-th-field="*{field}" name="field" id="countries_disabled" class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">Choose</option>
+                <option value="name">Name</option>
+                <option value="email">Email</option>
+                <option value="phone">PhoneNumber</option>
+            </select>
+        </div>
+
+        <!-- Search Field and Button on the Right -->
+        <div class="flex items-center gap-x-2">
+            <!-- Search Input -->
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
+                <input  data-th-field="*{value}" name="keyword" type="text" id="table-search-users" class="block w-80 py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users">
+            </div>
+            <!-- Search Button -->
+            <button type=" submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        </div>
+    </div>
+</form>
+
+
+
+<!--  table headings -->
+    <table  th:unless="${PageContact.empty}" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
+            <tr>
+                
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    PhoneNumber
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Links
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            
+            <tr 
+            data-th-object="${c}"
+            data-th-each="c :${PageContact}"
+             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                
+                <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                    <img 
+                    class="w-10 h-10 rounded-full" 
+                    onerror="this.src='@{`/images/user.png`}'"
+                    th:src="@{*{picture}}" alt="Jese image">
+                    <div class="ps-3">
+                        <div class="text-base font-semibold" data-th-text="*{name}">Neil Sims</div>
+                        <div class="font-normal text-gray-500" data-th-text="*{email}">neil.sims@flowbite.com</div>
+                    </div>  
+                </th>
+                <td class="px-6 py-4" >
+                    <i class="fa-solid fa-phone w-4 h-4"></i>
+                    <span data-th-text="${c.phonenumber}"></span>
+                    
+                </td>
+                <td class="px-6 py-4">
+                    <div th:if="*{favorite}"
+                    class="flex items-center">
+                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Favorite
+                    </div>
+                    <!-- website link -->
+                     
+                    <a data-th-href="@{*{websiteLink}}" target="_blank" href="">
+                        <i class="fa-solid h-6 w-6 fa-link"></i>
+                        <!-- <span th:src="@{'/images/durability.gif'}"></span> -->
+                    </a>
+                    <a href="" data-th-href="@{*{linkedInLink}}">
+                        <i class="fa-brands h-6 w-6 fa-linkedin"></i>
+                    </a>
+
+                    
+                </td>
+                <td class="px-6 py-4">
+                    <div>
+                    <button th:onclick="deleteContact([[${c.id}]])" class="mr-2">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                    <a th:href="@{'/user/contact/view-previous/'+${c.id}}" class="mr-2">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <button th:onclick="loadContactData([[${c.id}]])" class="mr-2">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    </div>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <!-- pagination component -->
+     <div  th:unless="${PageContact.empty}"class="pagination_container  p-5 flex justify-center bg-white dark:bg-gray-800" >
+        <nav aria-label="Page navigation example">
+            <ul class="flex items-center -space-x-px h-10 text-base">
+              <li data-th-unless="${PageContact.first}">
+                <a data-th-href="@{'/user/contact/view-all?size='+${PageSize}+'&page='+${PageContact.number-1}}"href="#" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <span class="sr-only">Previous</span>
+                  <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                  </svg>
+                </a>
+              </li>
+              <li 
+              data-th-each="index : ${#numbers.sequence(0,PageContact.totalPages-1)}">
+                <a data-th-classappend="${index==PageContact.number ? 'bg-blue-100 dark:bg-gray-600' : 'bg-white dark:bg-gray-800'}" data-th-href="@{'/user/contact/view-all?size='+${PageSize}+'&page='+${index}}"href="#"  class=" rounded-sm flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"data-th-text="${index+1}">1</a>
+              </li>
+               
+              <li data-th-unless="${PageContact.last}">
+                <a data-th-href="@{'/user/contact/view-all?size='+${PageSize}+'&page='+${PageContact.number+1}}"href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <span class="sr-only">Next</span>
+                  <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </nav>
+     </div>
+     <h1 th:if="${PageContact.empty}" class="text-center p-4 text-5xl animate-ping"> No Result Found</h1>
+
+    
+</div>
+
+
+
+        </div>
+        <div th:replace="~{user/modal :: contact_modal}"></div>
+    
+    </section>
+    <script th:src="@{'/javas/contacts.js'}"></script>   
+</body>
+</html>
